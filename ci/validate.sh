@@ -47,8 +47,6 @@ done
 
 kill -15 `ps -ef | grep rtSampleServer|grep -v grep|awk '{print $2}'`
 kill -15 `ps -ef | grep rtSampleClient|grep -v grep|awk '{print $2}'`
-echo "printing logs"
-cat $EXECLOGS
 #need to change
 grep "value:1234" $EXECLOGS
 retVal=$?
