@@ -37,7 +37,8 @@ retVal=1
 export RT_LOG_LEVEL=info
 export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/pxCore/build/glut:$LD_LIBRARY_PATH
 $TRAVIS_BUILD_DIR/rtSampleServer &
-$TRAVIS_BUILD_DIR/rtSampleClient 2&>$EXECLOGS &
+cd $TRAVIS_BUILD_DIR
+./rtSampleClient > $EXECLOGS 2>&1 &
 
 while [ "$count" -ne "10" ]; do
         count=$((count+10))
@@ -46,6 +47,8 @@ done
 
 kill -15 `ps -ef | grep rtSampleServer|grep -v grep|awk '{print $2}'`
 kill -15 `ps -ef | grep rtSampleClient|grep -v grep|awk '{print $2}'`
+echo "printing logs"
+cat $EXECLOGS
 #need to change
 grep "value:1234" $EXECLOGS
 retVal=$?
