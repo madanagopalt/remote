@@ -22,10 +22,10 @@ checkError()
   fi
 }
 
-$TRAVIS_BUILD_DIR/ci/build.sh 2&>$BUILDLOGS
+./ci/build.sh 2&>$BUILDLOGS
 checkError $? "Build failed" "Build problem" "Analyze corresponding log file" $BUILDLOGS
 
-$TRAVIS_BUILD_DIR/ci/run.sh 2&>$EXECLOGS
+./ci/run.sh 2&>$EXECLOGS
 
 cat $EXECLOGS
 echo "printed exec logs"
