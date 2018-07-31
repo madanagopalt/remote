@@ -6,4 +6,4 @@ matrix:
 language: c++
 before_install:
 script:
-- ./ci/validate.sh
+- ./ci/script.sh
