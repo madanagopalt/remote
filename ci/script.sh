@@ -23,12 +23,14 @@ checkError()
 }
 
 ./ci/build.sh 2&>$BUILDLOGS
+retVal=$?
 checkError $? "Build failed" "Build problem" "Analyze corresponding log file" $BUILDLOGS
-
-./ci/run.sh 2&>$EXECLOGS
-
-cat $EXECLOGS
-echo "printed exec logs"
-checkError $? "Execution failed" "Execution problem" "Analyze corresponding log file" $EXECLOGS
+if [ "$retval" -eq 0 ]
+then
+  ./ci/run.sh 2&>$EXECLOGS
+  cat $EXECLOGS
+  echo "printed exec logs"
+  checkError $? "Execution failed" "Execution problem" "Analyze corresponding log file" $EXECLOGS
+fi
 
 exit 0;
