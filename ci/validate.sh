@@ -32,27 +32,26 @@ EXECLOGS=$TRAVIS_BUILD_DIR/execlogs
 touch $EXECLOGS
 cd $TRAVIS_BUILD_DIR
 #run sample apps
+touch clientlogs
 count=0
 retVal=1
-export RT_LOG_LEVEL=info
+export RT_LOG_LEVEL=debug
 export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/pxCore/build/glut:$LD_LIBRARY_PATH
 $TRAVIS_BUILD_DIR/rtSampleServer &
-cd $TRAVIS_BUILD_DIR
-./rtSampleClient > $EXECLOGS 2>&1 &
-
-while [ "$count" -ne "10" ]; do
-        count=$((count+10))
-        sleep 10;
-done
+$TRAVIS_BUILD_DIR/rtSampleClient >& clientlogs &
+sleep 30;
+grep "value:1234" clientlogs
+retVal=$?
 
 kill -15 `ps -ef | grep rtSampleServer|grep -v grep|awk '{print $2}'`
 kill -15 `ps -ef | grep rtSampleClient|grep -v grep|awk '{print $2}'`
-#need to change
-grep "value:1234" $EXECLOGS
-retVal=$?
 #perform validation
 if [ "$retVal" -eq 1 ]
 then
+  echo "rtRemote client logs are below:"
+  echo "---------------------------------"
+  cat clientlogs
+  echo "Validation Failed !!!!!!!!!!!!!!!!!!!!!"
   exit 1
 fi
 exit 0;
