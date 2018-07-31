@@ -10,7 +10,7 @@ cd temp
 cmake -DBUILD_RTCORE_LIBS=ON -DBUILD_PXCORE_LIBS=OFF -DBUILD_PXSCENE=OFF ..
 cmake --build .
 retVal=$?
-if [ "$retVal" -eq 1 ]
+if [ "$retVal" -ne 0 ]
 then
 	exit 1;
 fi
@@ -23,7 +23,7 @@ cd temp
 cmake -DCMAKE_CXX_FLAGS=" -I$TRAVIS_BUILD_DIR/pxCore/src/ -L$TRAVIS_BUILD_DIR/pxCore/build/glut/ " -DBUILD_RTREMOTE_SAMPLE_APP_SIMPLE=ON ..
 cmake --build . --config Release
 retVal=$?
-if [ "$retVal" -eq 1 ] 
+if [ "$retVal" -ne 0 ] 
 then
 	exit 1;
 fi
