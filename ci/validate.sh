@@ -12,6 +12,7 @@ cmake --build .
 retVal=$?
 if [ "$retVal" -ne 0 ]
 then
+        echo "Validation failed because rtCore build failed !!!!!!!!!!!!!!!!!!!!!!!!!";
 	exit 1;
 fi
 
@@ -25,11 +26,10 @@ cmake --build . --config Release
 retVal=$?
 if [ "$retVal" -ne 0 ] 
 then
+        echo "Validation failed because rtRemote build failed !!!!!!!!!!!!!!!!!!!!!!!!!";
 	exit 1;
 fi
 
-EXECLOGS=$TRAVIS_BUILD_DIR/execlogs
-touch $EXECLOGS
 cd $TRAVIS_BUILD_DIR
 #run sample apps
 touch clientlogs
@@ -54,4 +54,5 @@ then
   echo "Validation Failed !!!!!!!!!!!!!!!!!!!!!"
   exit 1
 fi
+echo "Validation Succeeded !!!!!!!!!!!!!!!!!!!!!"
 exit 0;
