@@ -37,8 +37,8 @@ count=0
 retVal=1
 export RT_LOG_LEVEL=debug
 export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/pxCore/build/glut:$LD_LIBRARY_PATH
-$TRAVIS_BUILD_DIR/rtSampleServer &
-$TRAVIS_BUILD_DIR/rtSampleClient >& clientlogs &
+./rtSampleServer &
+./rtSampleClient > clientlogs 2>&1 &
 sleep 30;
 grep "value:1234" clientlogs
 retVal=$?
